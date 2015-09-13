@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+	- Contact
+{% endblock %}
+
+
+{% block content %}
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1397272193867713&version=v2.0";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="page-header">
+	<h1>{{ title }} <span style="margin-left: 20px; margin-right: 20px;">|</span>(908) 766-2357</h1>
+</div>
+<div class='row'>
+	<div class='col-md-5 text'>
+		<h5>Thank you for your interest in G Fitness. We are delighted to hear from you!</h5>
+		<h5>Please submit this form with your question or comment and we will respond promptly.</h5><br />
+
+
+		{% if confirm_message %}
+			<p>{{ confirm_message }}</p>
+		{% endif %}
+
+
+		{% if form %}
+			<form method='POST' action=''> {% csrf_token %}
+		{{ form|crispy }}
+			<input type='submit' value='Send' class='btn btn-danger' />
+			</form>
+		{% endif %}
+		<br/>
+		<br/>
+		<br/>
+	</div>
+	
+	<div class='col-md-3 col-md-offset-3'>
+		<h4 class="text-header">Follow us on social media!</h4><br/><br/>
+
+		<!-- Instagram -->
+		<style>.ig-b- { display: inline-block; }
+		.ig-b- img { visibility: hidden; }
+		.ig-b-:hover { background-position: 0 -60px; } .ig-b-:active { background-position: 0 -120px; }
+		.ig-b-48 { width: 48px; height: 48px; background: url(//badges.instagram.com/static/images/ig-badge-sprite-48.png) no-repeat 0 0; }
+		@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+		.ig-b-48 { background-image: url(//badges.instagram.com/static/images/ig-badge-sprite-48@2x.png); background-size: 60px 178px; } }</style><a href="http://instagram.com/garciafitness?ref=badge" class="ig-b- ig-b-48"><img src="//badges.instagram.com/static/images/ig-badge-48.png" alt="Instagram" /></a> <span class="text-header">@GarciaFitness</span><br/><br/><br/>
+
+		<!-- Facebook -->
+		<div class="fb-like-box" data-href="https://www.facebook.com/gfitness4" data-width="250" data-height="300" data-colorscheme="dark" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>
+
+	</div>
+</div>
+<div class='row'>
+	<div class='col-md-3 col-md-offset-1 text'>
+		<h4><b class="text-header">WHERE WE ARE LOCATED:</b></h4>
+		<br/>
+
+		75 Claremont Road, Suite 202
+		Bernardsville, NJ 07924
+		<br/>
+		<br/>
+		<br/>
+
+		<h4><b class="text-header">GETTING DIRECTIONS:</b></h4>
+		<br/>
+
+		To obtain directions, please:<br/>
+		<ul>
+			<li>Click the <span style="color: #8b008b;"><b>purple icon</b></span> shown on the map</li>
+			<li>Select <i>Get Directions</i></li>
+			<li>Enter your starting address in the appropriate field</li>
+		</ul>
+	</div>
+
+	<div class='col-md-5 text'>
+		<iframe src="http://mapq.st/embed?q=75+Claremont+Rd+Bernardsville" height="480" width="640"></iframe>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+	</div>
+</div>
+
+{% endblock %}

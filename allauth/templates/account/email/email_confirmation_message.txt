@@ -1,0 +1,4 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}User {{ user_display }} has provided this as an email address for account verification.
+
+To confirm this is correct, please go to: {{ activate_url }}
+{% endblocktrans %}{% endautoescape %}

@@ -1,0 +1,4 @@
+{% load staticfiles i18n %}
+{% if user.is_staff %}
+	<a href="{{ create_event_url }}&amp;next={{here}}"><img border="0" src="{% static "schedule/img/add.png" %}" style="padding-left: 8px;"alt="{% trans "Add Event" %}"></a>
+{% endif %}

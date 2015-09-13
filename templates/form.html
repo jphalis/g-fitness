@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load cms_tags %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class='col-sm-6 col-sm-offset-3' style='margin-top: 50px;'>
+		<h3>{{ form_title }}</h3>
+		<form method='POST' action=''>{% csrf_token %}
+			{{ form|cripsy }}
+
+
+		<input type='submit' value='{% if submit_btn %}{{ submit_btn }}{% else %}Submit{% endif %}' class='btn btn-info' />
+		</form>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+	- Pricing
+{% endblock %}
+
+{% block content %}
+
+	<div class="col-md-6 col-md-offset-2">
+		<br/>
+		<img src="{% static 'img/Pricing.png' %}" />
+		<br/>
+		<br/>
+	</div>
+
+	<div class="col-md-8 col-md-offset-2">
+		<h3 class="text-header"><b>Personal Training Rates</b></h3><br/>
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="text-header">
+					<tr>
+						<td><b>Type of Session</b></td>
+						<td></td>
+						<td></td>
+						<td><b>Cost</b></td>
+					</tr>
+				</thead>
+				<tbody class="text">
+					<tr>
+						<td><b>Single Session</b><br/> 
+							<i>(1 or 2 Clients)</i></td>
+						<td></td>
+						<td></td>	
+						<td><b>$80.00</b></td>
+					</tr>
+					<tr>
+						<td><b>10 Sessions</b><br/> 
+							<i>(1 or 2 Clients)</i></td>
+						<td></td>
+						<td></td>
+						<td><b>$70.00 <i>per session</i></b></td>
+					</tr>
+					<tr>
+						<td><b>20 Sessions</b><br/>  
+							<i>(1 or 2 Clients)</i></td>
+						<td></td>
+						<td></td>
+						<td><b>$60.00 <i>per session</i></b></td>
+					</tr>
+					<tr>
+						<td><b>1/2 Hour Sessions</b><br/></td>
+						<td></td>
+						<td></td>
+						<td><b>$50.00 <i>per session</i></b></td>
+					</tr>
+					<tr>
+						<td>Additional Client</b><br/></td>
+						<td></td>
+						<td></td>
+						<td><b>$20.00 <i>each</i></b></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br/>
+		<br/>
+		<br/>
+	</div>
+					
+	<div class="col-md-8 col-md-offset-2">
+		<h3 class="text-header"><b>Athletic Group Training Rates</b></h3>
+		<i class="text">(Training Groups are available on a first come first serve basis)</i><br/><br/> 
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="text-header">
+					<tr>
+						<td><b>Type of Session</b></span></td>
+						<td><b>Cost</b></td>
+						<td><b>Per Session Cost</b></td>
+					</tr>
+				</thead>
+				<tbody class="text">
+					<tr>
+						<td>New Client 30 Day Unlimited *</td>
+						<td><b>$250.00</b></td>
+						<td><b>$13.88</b></td>
+					</tr>
+					<tr>
+						<td>Monthly<br/>
+						<i>following New Client 30 Day Unlimited</i></td>
+						<td><b>$350.00</b></td>
+						<td><b>$19.44</b></td>
+					</tr>
+					<tr>
+						<td>1 Class</td>
+						<td><b>$30.00</b></td>
+						<td><b>$30.00</b></td>
+					</tr>
+					<tr>
+						<td>10 Classes</td>
+						<td><b>$275.00</b></td>
+						<td><b>$27.50</b></td>
+					</tr>
+					<tr>
+						<td>20 Classes</td>
+						<td><b>$500.00</b></td>
+						<td><b>$25.00</b></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p class="text"><i>Monthly rates based on 4 sessions per week. 18 session per month.</i></p>
+		<p class="text"><i>* One time only for new customers to the gym.</i></p>
+		<br/>
+		<br/>
+		<br/>
+	</div>
+
+{% endblock%}
+
+
+

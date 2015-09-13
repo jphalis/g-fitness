@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	{% if user.is_authenticated %}
+		<ul>
+			{% for cal in object_list %}
+				<h2 class="text">{{ cal }}:</h2>
+				<ul>
+					<!--   <a href="{% url "compact_calendar" cal.slug %}">Small Month</a> -- -->
+					<!--   <a href="{% url "tri_month_calendar" cal.slug %}">3 Months</a> -- -->
+					<!--   <a href="{% url "year_calendar" cal.slug %}">This Year</a> -- -->
+					<a href="{% url "day_calendar" cal.slug %}">Daily</a> --
+					<a href="{% url "week_calendar" cal.slug %}">Weekly</a> --
+					<a href="{% url "month_calendar" cal.slug %}">Monthly</a>
+					<!-- <a href="{% url "upcoming_events_feed" cal.id %}">Feed</a> -->
+				</ul><br/>
+			{% endfor %}
+		</ul>
+
+	{% else %}
+		<br/>
+		<h4 class="text" style="text-align: center;">Please <a href="{% url 'account_login' %}">sign in</a> to view and schedule appointments on the calendar.</h4>
+
+	{% endif %}
+{% endblock %}

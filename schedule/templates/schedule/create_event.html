@@ -1,0 +1,19 @@
+{% extends "schedule/event_form_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="col-md-4 col-md-offset-1 text">
+	<h4 style="text-align: center;" class="text-header">Create or change an event.</h4>
+	<br/>
+	<form action="" method="post">
+	  {% csrf_token %}
+	    {{ form|crispy }}
+	  <br/>
+	  <input class='btn btn-danger' type="submit" value="Schedule Workout">
+	  <input class='btn btn-default' type="button" value="Cancel" onclick="window.location='{{next}}'"/>
+	  <input type="hidden" name="next" value="{{next|default:""}}"/>
+	</form>
+	<br/><br/><br/><br/><br/><br/><br/><br/>
+</div>
+{% endblock %}

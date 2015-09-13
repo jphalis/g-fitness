@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Completed</h1>
+	<br/>
+	<h5 class="text">Are you sure this lesson was completed? Selecting <i>"Completed"</i> will remove a lesson from the user's account.</h5>
+
+	<form action="" method="POST">
+	    {% csrf_token %}
+	    {{ object }}
+	    <br/>
+	    <br/>
+
+	    <input type="submit" value="Completed" class='btn btn-danger' />
+	    <input type="button" value="Cancel" class='btn btn-default' onclick="window.location='{{next}}'"/>
+	    <input type="hidden" name="next" value="{{next|default:""}}"/>
+	</form>
+{% endblock %}

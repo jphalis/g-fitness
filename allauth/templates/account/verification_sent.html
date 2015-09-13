@@ -1,0 +1,17 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %} - {% trans "Verify Your Email Address" %}{% endblock %}
+
+{% block content %}
+	<div class="container" style=" width: 800px; border: 1px solid #ddd; padding-bottom: 3em; border-radius: .3em; box-shadow: 0 1px 3px #cccccc;">
+        <div class="row" style="margin-top: .5em">
+            <div class="col-sm-8 col-sm-offset-2">
+			    <h1>{% trans "Verify Your Email Address" %}</h1>
+
+			    <h5>{% blocktrans %}We have sent an email to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes.{% endblocktrans %}</h5>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+
+{% block head_title %}
+	- Contact
+{% endblock %}
+
+
+{% block content %}
+
+	<div class='col-md-8 col-md-offset-2'>
+
+		<div class='row'>
+			<table class='table text'>
+
+			<thead>
+				<th>Client</th>
+				<th style="text-align: center;">Number of Lessons Remaining</th>
+				<th>Next Lesson</th>
+			</thead>
+			
+			{% for object in queryset %}
+
+					<tr>
+						<td>{{ object.user.get_full_name }}</td>
+						<td style="text-align: center;">{{ object.lesson_current_amount }}</td>
+						{% for item in lesson_set %}
+							{% if object.user == item.creator %}
+								{% if item.start > item.current_date %}
+									<td style="color: red;"><b>{{ item.start|slice:":1" }}</b></td>
+								{% else %}
+									<td><i>Not yet scheduled</i></td>
+								{% endif %}
+							{% else %}
+								<td><i>Not yet scheduled</i></td>
+							{% endif %}
+						{% endfor %}
+					</tr>
+
+				
+			{% endfor %}
+
+			</table>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+		</div>
+
+	</div>
+
+{% endblock %}

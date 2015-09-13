@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load scheduletags i18n %}
+
+{% block content %}
+
+  {% include "schedule/_dialogs.html" %}
+  <div class="navigation">
+    <a href="{% url "week_calendar" calendar.slug %}{% querystring_for_date periods.day.start 3 True %}">
+      Week
+    </a>
+    <a href="{% url "month_calendar" calendar.slug %}{% querystring_for_date periods.day.start 2 True %}">
+      Month
+    </a>
+    <a href="{% url "year_calendar" calendar.slug %}{% querystring_for_date periods.day.start 1 True %}">
+      Year
+    </a>
+  </div>
+  <div class="tablewrapper text">
+      <div class="calendarname">{{ calendar.name }}</div>
+      {% prevnext "day_calendar" calendar.slug periods.day "l, F d, Y" %}
+      <div class="now">
+        <a href="{% url "day_calendar" calendar.slug %}">
+          Today
+        </a>
+      </div>
+  </div>
+  <br/>
+  <div class ="text" style="position: absolute;">
+      <div style="position: absolute; left:100px;">
+        {% daily_table periods.day 380 120 500 6 12 %}
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+      </div>
+
+      <div style="position: absolute; left:650px;">
+        {% daily_table periods.day 380 120 500 12 19.5 %}
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+      </div>
+  </div>
+
+{% endblock %}

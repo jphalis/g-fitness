@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<div class='col-md-8 col-md-offset-2'>
+
+	<div class="row">
+		<br/>
+		<img src="{% static 'img/billing-history.png' %}" />
+		<br/>
+		<br/>
+	</div>
+
+	<div class='row'>
+		<table class='table text'>
+
+		<thead>
+			<th>Order ID</th>
+			<th>Number of Lessons</th>
+			<th>Amount</th>
+			<th>Date</th>
+		</thead>
+		
+		{% for object in queryset %}
+
+			<tr>
+				<td>{{ object.order_id }}</td>
+				<td>{{ object.number_of_lessons }}</td>
+				<td>$ {{ object.final_total }}</td>
+				<td>{{ object.updated }}</td>
+			</tr>
+
+		{% endfor %}
+
+		</table>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+	</div>
+
+</div>
+
+{% endblock %}
+
+
+
+

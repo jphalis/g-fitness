@@ -1,0 +1,58 @@
+.alert-top-message {
+	background-color: #DBDBDB;
+	text-align: center;
+	margin-bottom: 0px;
+	border-radius: 0px;
+}
+
+.alert-top-message h5 {
+	margin: 0 auto;
+}
+
+.background_img_thumb {
+	width: 100%; 
+	height: 100%; 
+	background-image: url("/static/img/placeholder.svg");
+	background-size: cover; 
+	background-repeat: no-repeat; 
+	background-position: center;
+}
+
+body {
+  height: 100%; 
+  background-color: #151515;
+}
+
+.container .jumbotron {
+	border-radius: 18px;
+	padding-right: 60px;
+	padding-left: 60px;
+}
+
+.jumbotron {
+	background-color: blue;
+}
+
+.modal-dialog {
+	margin-top: 18%;
+}
+
+.navbar-brand {
+	height: 40px;
+	padding: 4px 12px 15px 15px
+}
+
+.navbar-links {
+	color: #a7a7a7;
+}
+
+
+
+
+
+
+
+
+
+
+

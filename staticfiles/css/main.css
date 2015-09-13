@@ -1,0 +1,55 @@
+h1 {
+	color: #ffffff;
+	font-size: 26px;
+}
+
+h2 {
+	color: #333;
+}
+
+h3 {
+	color: #333;
+}
+
+p {
+	color: #333;
+}
+
+@media(min-width: 1200px) {
+	.total {
+		position: fixed;
+	}
+}
+
+.radio-label {
+	font-size: 14px;
+	font-weight: normal;
+	padding: 0px 5px 0px 0px;
+}
+
+.radio-label:hover {
+	font-size: 14px;
+	font-weight: normal;
+	color: #428bca;
+	cursor: pointer;
+}
+
+.text {
+	color: #a7a7a7;
+}
+
+.text-header {
+	color: #ffffff;
+}
+
+.dropdown-menu li:hover .sub-menu {
+    visibility: visible;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+
+
+
