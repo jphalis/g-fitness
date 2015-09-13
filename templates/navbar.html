@@ -16,6 +16,7 @@
       <ul class="nav navbar-nav">
           {% url "about" as about %}
           <!-- {% url "products" as products %} -->
+          {% url "massage" as massage %}
           {% url "workout_schedule" as workout_schedule %}
           <!-- {% url "calendar_list" as calendar_list %} -->
           {% url "required_forms" as required_forms %}
@@ -27,6 +28,9 @@
 
         <li {% if request.path == about %}class="active" {% endif %} >
             <a href="{% url 'about' %}" class="navbar-links">About</a>
+        </li>
+        <li {% if request.path == massage %}class="active" {% endif %} >
+            <a href="{% url 'massage' %}" class="navbar-links">Massage</a>
         </li>
 
         <!-- <li {% if request.path == products %}class="active" {% endif %}>
