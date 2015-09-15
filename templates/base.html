@@ -43,13 +43,12 @@
                 <div class="container">
                     <h4>{{ request.session.marketing_message|safe }}</h4>
                 </div>
-        </div> -->
-    {% endif %}
+        </div>
+    {% endif %} -->
 
   	{% include 'navbar.html' %}
 
     <div class="container theme-showcase" role="main">
-
         {% if messages %}
             {% for message in messages %}
                 <div class="alert {% if "success" in message.tags %}alert-success{% elif "info" in message.tags %}alert-info{% elif "warning" in message.tags %}alert-warning{% elif "error" in message.tags %}alert-danger{% endif %} alert-dismissible" role="alert">
@@ -60,17 +59,13 @@
         {% endif %}
 
         {% block jumbotron %}{% endblock jumbotron %}
-
         {% block content %}{% endblock content %}
-
-    </div> <!-- /container -->
+    </div>
 
     {% include "modal.html" %}
 
     <!-- # ========================== JAVASCRIPT FILES ========================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- "{% static 'js/bootstrap.min.js' %}"> -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="{% static 'js/docs.min.js' %}"></script>
     <script src="{% static 'js/jquery.Jcrop.min.js' %}"></script>
@@ -119,8 +114,6 @@
     //                 });
     //             });
     //         {% endif %}
-
-
             
     //     });
     // </script>
