@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('allauth.urls')),
     url(r'^accounts/address/add/$', 'profiles.views.add_user_address', name='add_user_address'),
     url(r'^', include('schedule.urls')),
-    
+
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIAFILES_DIRS)
 
 # if not settings.DEBUG:

@@ -11,9 +11,7 @@ def massage(request):
 
 def products(request):
     products = Product.objects.all()
-    context = {'products': products}
-    template = 'products/products.html'
-    return render(request, template, context)
+    return render(request, 'products/products.html', {'products': products})
 
 
 def search(request):
@@ -43,7 +41,6 @@ def single(request, slug):
             'product': product,
             'images': images
         }
-        template = 'products/single.html'
-        return render(request, template, context)
+        return render(request, 'products/single.html', context)
     except:
         raise Http404

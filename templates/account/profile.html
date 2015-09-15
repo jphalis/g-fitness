@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block content %}
-
 	<h3 style="color: red;">{{ request.user.username }}</h3>
-	<h3 class="text">Remaining lessons: <span style="color: red;">{{ lessoncount.lesson_current_amount }}</span></h3>
-
-{% endblock %}
+	<h3 class="text">
+        Remaining lessons: <span style="color: red;">{{ lessoncount.lesson_current_amount }}</span>
+    </h3>
+{% endblock content %}

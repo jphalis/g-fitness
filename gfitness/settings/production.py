@@ -38,7 +38,7 @@ if not settings.DEBUG:
     }
 
     try:
-        #Heroku database
+        # Heroku database
         import dj_database_url
         DATABASES['default'] = dj_database_url.config()
     except:
@@ -48,31 +48,22 @@ if not settings.DEBUG:
 
     ALLOWED_HOSTS = ['*']
 
-    
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 #     MEDIA_URL = '/media/'
 
 #     MEDIA_ROOT = os.path.join(os.path.dirname(settings.BASE_DIR), "src", "static", "media")
 
-    #https://devcenter.heroku.com/articles/django-assets
-    #NOTE -- I noticed this and it is suggested on heroku: https://devcenter.heroku.com/articles/django-assets#whitenoise
-    # STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-    
     STATIC_ROOT = 'staticfiles'
     STATIC_URL = '/static/'
-    MEDIA_URL= '/media/'
+    MEDIA_URL = '/media/'
 
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
     )
-    
+
     MEDIAFILES_DIRS = (
         os.path.join(BASE_DIR, 'static', 'media')
     )
 
     # MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
-
-
-
-

@@ -2,6 +2,7 @@ from django.db.models.signals import pre_save
 
 from schedule.models import Event, Calendar
 
+
 def optionnal_calendar(sender, **kwargs):
     event = kwargs.pop('instance')
 

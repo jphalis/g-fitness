@@ -16,7 +16,6 @@
 				The Cart is a temporary place to store a list of your items and reflects each item's most recent price.</i></h6>
 
 		{% else %}
-
 			<table class="table text-header">
 				<thead>
 					<th>Item</th>
@@ -50,11 +49,10 @@
 				<h5 class="text"><i>Current Total Lessons: {{ cart.get_lesson_final_amount }}</i></h5>
 				<h5 class="text"><i>Subtotal: ${{ cart.total }} | Tax: ${{ cart.get_tax_total_amount }}</i></h5>
 				<h4><strong class="text-header">Current Total: ${{ cart.get_final_amount }}</strong></h4>
-
-			<br/>
+			    <br/>
 			<button type="button" class="btn btn-warning">
 				<a href="{% url 'checkout' %}" style="text-decoration: none;"><span style="color: white;">Checkout</span></a>
 			</button>
 		{% endif %}
 	</div>
-{% endblock %}
+{% endblock content %}

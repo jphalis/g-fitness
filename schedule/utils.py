@@ -137,4 +137,3 @@ def coerce_date_dict(date_dict):
         except KeyError:
             break
     return modified and ret_val or {}
-

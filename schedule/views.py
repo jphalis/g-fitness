@@ -1,5 +1,6 @@
 from future import standard_library
 standard_library.install_aliases()
+
 import json
 import pytz
 import datetime
@@ -14,11 +15,11 @@ from django.shortcuts import render, render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.utils import timezone
 from django.utils.decorators import method_decorator
-from django.views.generic.base import View
 from django.views.generic.edit import DeleteView
 
 from profiles.models import LessonCount
-from profiles.signals import membership_lesson_update, membership_lesson_completed, membership_lesson_canceled
+from profiles.signals import (membership_lesson_completed,
+                              membership_lesson_canceled)
 
 from schedule.conf.settings import GET_EVENTS_FUNC, OCCURRENCE_CANCEL_REDIRECT
 from schedule.forms import EventForm, OccurrenceForm
@@ -94,12 +95,16 @@ def calendar_by_periods(request, calendar_slug, periods=None, template_name="sch
     event_list = GET_EVENTS_FUNC(request, calendar)
     local_timezone = request.session.setdefault(None, 'US/Eastern')
     local_timezone = pytz.timezone(local_timezone)
-    period_objects = {} 
+    period_objects = {}
     for period in periods:
         if period.__name__.lower() == 'year':
-            period_objects[period.__name__.lower()] = period(event_list, date, None, local_timezone) 
+            period_objects[period.__name__.lower()] = period(event_list,
+                                                             date, None,
+                                                             local_timezone)
         else:
-            period_objects[period.__name__.lower()] = period(event_list, date, None, None, local_timezone)
+            period_objects[period.__name__.lower()] = period(event_list, date,
+                                                             None, None,
+                                                             local_timezone)
     return render_to_response(template_name, {
         'date': date,
         'periods': period_objects,
@@ -131,7 +136,8 @@ def event(request, event_id, template_name="schedule/event.html"):
     })
 
 
-def occurrence(request, event_id, template_name="schedule/occurrence.html", *args, **kwargs):
+def occurrence(request, event_id, template_name="schedule/occurrence.html",
+               *args, **kwargs):
     """
     This view is used to display an occurrence.
 
@@ -156,7 +162,9 @@ def occurrence(request, event_id, template_name="schedule/occurrence.html", *arg
 
 
 @check_event_permissions
-def edit_occurrence(request, event_id, template_name="schedule/edit_occurrence.html", *args, **kwargs):
+def edit_occurrence(request, event_id,
+                    template_name="schedule/edit_occurrence.html",
+                    *args, **kwargs):
     event, occurrence = get_occurrence(event_id, *args, **kwargs)
     next = kwargs.get('next', None)
     form = OccurrenceForm(data=request.POST or None, instance=occurrence)
@@ -175,14 +183,17 @@ def edit_occurrence(request, event_id, template_name="schedule/edit_occurrence.h
 
 
 @check_event_permissions
-def cancel_occurrence(request, event_id, template_name='schedule/cancel_occurrence.html', *args, **kwargs):
+def cancel_occurrence(request, event_id,
+                      template_name='schedule/cancel_occurrence.html',
+                      *args, **kwargs):
     """
     This view is used to cancel an occurrence. If it is called with a POST it
     will cancel the view. If it is called with a GET it will ask for
     conformation to cancel.
     """
     event, occurrence = get_occurrence(event_id, *args, **kwargs)
-    next = kwargs.get('next', None) or get_next_url(request, event.get_absolute_url())
+    next = kwargs.get('next', None) or get_next_url(request,
+                                                    event.get_absolute_url())
     if request.method != "POST":
         return render_to_response(template_name, {
             "occurrence": occurrence,
@@ -192,7 +203,8 @@ def cancel_occurrence(request, event_id, template_name='schedule/cancel_occurren
     return HttpResponseRedirect(next)
 
 
-def get_occurrence(event_id, occurrence_id=None, day=None, month=None, year=None, hour=None, minute=None, second=None):
+def get_occurrence(event_id, occurrence_id=None, day=None, month=None,
+                   year=None, hour=None, minute=None, second=None):
     """
     Because occurrences don't have to be persisted, there must be two ways to
     retrieve them. both need an event, but if its persisted the occurrence can
@@ -206,7 +218,8 @@ def get_occurrence(event_id, occurrence_id=None, day=None, month=None, year=None
     elif(all((day, month, year, hour, minute, second))):
         event = get_object_or_404(Event, id=event_id)
         occurrence = event.get_occurrence(
-            datetime.datetime(int(day), int(month), int(year), int(hour), int(minute), int(second)))
+            datetime.datetime(int(day), int(month), int(year), int(hour),
+                              int(minute), int(second)))
         if occurrence is None:
             raise Http404
     else:
@@ -215,7 +228,9 @@ def get_occurrence(event_id, occurrence_id=None, day=None, month=None, year=None
 
 
 @check_event_permissions
-def create_or_edit_event(request, calendar_slug, event_id=None, next=None, template_name='schedule/create_event.html', form_class=EventForm):
+def create_or_edit_event(request, calendar_slug, event_id=None, next=None,
+                         template_name='schedule/create_event.html',
+                         form_class=EventForm):
 
     date = coerce_date_dict(request.GET)
     initial_data = None
@@ -238,8 +253,8 @@ def create_or_edit_event(request, calendar_slug, event_id=None, next=None, templ
         instance = get_object_or_404(Event, id=event_id)
 
     calendar = get_object_or_404(Calendar, slug=calendar_slug)
-    form = form_class(data=request.POST or None, instance=instance, initial=initial_data)
-   
+    form = form_class(data=request.POST or None, instance=instance,
+                      initial=initial_data)
 
     if form.is_valid():
         event = form.save(commit=False)
@@ -248,16 +263,25 @@ def create_or_edit_event(request, calendar_slug, event_id=None, next=None, templ
             try:
                 to_email = event.creator.email
                 number_of_lessons = event.creator.lessoncount.lesson_current_amount
-                send_mail('New Lesson!', 'You have scheduled a workout for %s on %s.' %(request.user.get_full_name(), lesson_time_start), 'jphalisnj@gmail.com', ['jphalisnj@gmail.com'])
-                send_mail('New Lesson!', 'You have been scheduled for a new workout on %s. A lesson will be deducted from your account.' %(lesson_time_start), 'jphalisnj@gmail.com', [to_email])
-                membership_instance, created = LessonCount.objects.get_or_create(user=event.creator)
-                membership_lesson_completed.send(membership_instance, new_lesson_count=number_of_lessons - 1)
+                send_mail('New Lesson!', 'You have scheduled a workout for {} on {}.'.format(request.user.get_full_name(), lesson_time_start), 'jphalisnj@gmail.com', ['jphalisnj@gmail.com'])
+                send_mail('New Lesson!',
+                          'You have been scheduled for a new workout on {}. '
+                          'A lesson will be deducted from your account.'.format(
+                                lesson_time_start), 'jphalisnj@gmail.com', [to_email])
+                membership_instance, created = LessonCount.objects \
+                    .get_or_create(user=event.creator)
+                membership_lesson_completed.send(
+                    membership_instance,
+                    new_lesson_count=number_of_lessons - 1)
             except:
                 pass
         event.save()
         next = next or reverse('event', args=[event.id])
         next = get_next_url(request, next)
-        messages.success(request, "Thank you for scheduling a new lesson for %s!" %(lesson_time_start))
+        messages.success(
+            request,
+            "Thank you for scheduling a new lesson for {}!".format(
+                lesson_time_start))
         return HttpResponseRedirect(next)
 
     next = get_next_url(request, next)
@@ -274,16 +298,25 @@ class DeleteEventView(DeleteView):
     model = Event
 
     def delete(self, request, *args, **kwargs):
-        response = super(DeleteEventView, self).delete(request, *args, **kwargs)
+        response = super(DeleteEventView, self).delete(request,
+                                                       *args, **kwargs)
         deleted_event = self.object
 
         try:
             to_email = self.object.creator.email
-            send_mail('Canceled Lesson', ' You have canceld the workout for %s on %s.' %(request.user.get_full_name(), deleted_event), 'jphalisnj@gmail.com', ['jphalisnj@gmail.com'])
-            send_mail('Canceled Lesson', 'The lesson scheduled for %s has been canceled. A lesson will be refunded to your account.' %(deleted_event), 'jphalisnj@gmail.com', [to_email])
+            send_mail('Canceled Lesson',
+                      ' You have canceld the workout for {} on {}.'.format(
+                            request.user.get_full_name(), deleted_event),
+                            'jphalisnj@gmail.com', ['jphalisnj@gmail.com'])
+            send_mail('Canceled Lesson',
+                      'The lesson scheduled for {} has been canceled. '
+                      'A lesson will be refunded to your account.'.format(deleted_event),
+                      'jphalisnj@gmail.com', [to_email])
             number_of_lessons = self.object.creator.lessoncount.lesson_current_amount
-            membership_instance, created = LessonCount.objects.get_or_create(user=self.object.creator)
-            membership_lesson_canceled.send(membership_instance, new_lesson_count=number_of_lessons + 1)
+            membership_instance, created = LessonCount.objects.get_or_create(
+                user=self.object.creator)
+            membership_lesson_canceled.send(
+                membership_instance, new_lesson_count=number_of_lessons + 1)
         except:
             pass
         messages.success(request, 'Event %s canceled.' % deleted_event)
@@ -296,18 +329,19 @@ class DeleteEventView(DeleteView):
 
     def get_success_url(self):
         """
-        After the event is deleted there are three options for redirect, tried in
-        this order:
+        After the event is deleted there are three options for redirect,
+        tried in this order:
 
         # Try to find a 'next' GET variable
         # If the key word argument redirect is set
         # Lastly redirect to the event detail of the recently create event
         """
-        next = self.kwargs.get('next') or reverse('day_calendar', args=[self.object.calendar.slug])
+        next = self.kwargs.get('next') or reverse(
+            'day_calendar', args=[self.object.calendar.slug])
         next = get_next_url(self.request, next)
         return next
 
-    ## Override dispatch to apply the permission decorator
+    # Override dispatch to apply the permission decorator
     @method_decorator(login_required)
     @method_decorator(check_event_permissions)
     def dispatch(self, request, *args, **kwargs):
@@ -354,7 +388,7 @@ def get_next_url(request, default):
 
 
 def api_occurrences(request):
-    utc=pytz.UTC
+    utc = pytz.UTC
     # version 2 of full calendar
     if '-' in request.GET.get('start'):
         convert = lambda d: datetime.datetime.strptime(d, '%d-%m-%Y')
@@ -362,8 +396,9 @@ def api_occurrences(request):
         convert = lambda d: datetime.datetime.utcfromtimestamp(float(d))
     start = utc.localize(convert(request.GET.get('start')))
     end = utc.localize(convert(request.GET.get('end')))
-    calendar = get_object_or_404(Calendar, slug=request.GET.get('calendar_slug'))
-    response_data =[]
+    calendar = get_object_or_404(Calendar,
+                                 slug=request.GET.get('calendar_slug'))
+    response_data = []
     for event in calendar.events.filter(start__gte=start, end__lte=end):
         occurrences = event.get_occurrences(start, end)
         for occurrence in occurrences:
@@ -373,8 +408,5 @@ def api_occurrences(request):
                 "start": occurrence.start.isoformat(),
                 "end": occurrence.end.isoformat(),
             })
-    return HttpResponse(json.dumps(response_data), content_type="application/json")
-
-
-
-
+    return HttpResponse(json.dumps(response_data),
+                        content_type="application/json")
