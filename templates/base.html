@@ -58,8 +58,10 @@
             {% endfor %}
         {% endif %}
 
-        {% block jumbotron %}{% endblock jumbotron %}
-        {% block content %}{% endblock content %}
+        {% spaceless %}
+            {% block jumbotron %}{% endblock jumbotron %}
+            {% block content %}{% endblock content %}
+        {% endspaceless %}
     </div>
 
     {% include "modal.html" %}

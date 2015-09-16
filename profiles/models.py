@@ -19,9 +19,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class EmailMarketingSignup(models.Model):
     email = models.EmailField()
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-    # confirmed = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return str(self.email)
@@ -80,8 +79,8 @@ class UserAddress(models.Model):
     phone = PhoneNumberField()
     shipping = models.BooleanField(default=True)
     billing = models.BooleanField(default=True)
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.get_address()
@@ -162,13 +161,11 @@ def user_logged_in_signal(sender, signal, request, user, **kwargs):
     membership_obj, created = LessonCount.objects.get_or_create(user=user)
     if created:
         try:
-            # amount of purchased lessons
             membership_obj.lesson_current_amount = new_lesson_count
             membership_obj.save()
             user.is_member = True
             user.save()
         except:
-            # amount of purchased lessons
             membership_obj.lesson_current_amount = 0
             membership_obj.save()
             user.is_member = False

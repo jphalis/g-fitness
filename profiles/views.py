@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 
-from marketing.models import Slider
 from profiles.models import LessonCount
 from schedule.models.events import Event
 
@@ -14,16 +13,11 @@ from .models import UserDefaultAddress
 
 
 def home(request):
-    sliders = Slider.objects.all_featured()
-    context = {'sliders': sliders}
-    template = 'home.html'
-    return render(request, template, context)
+    return render(request, 'home.html', {})
 
 
 def about(request):
-    context = {}
-    template = 'about.html'
-    return render(request, template, context)
+    return render(request, 'about.html', {})
 
 
 @login_required
@@ -57,37 +51,26 @@ def search(request):
 
 
 def workout_schedule(request):
-    context = {}
-    template = 'workout_schedule.html'
-    return render(request, template, context)
+    return render(request, 'workout_schedule.html', {})
 
 
 def services(request):
-    context = {}
-    template = 'services.html'
-    return render(request, template, context)
+    return render(request, 'services.html', {})
 
 
 def pricing(request):
-    context = {}
-    template = 'pricing.html'
-    return render(request, template, context)
+    return render(request, 'pricing.html', {})
 
 
 def staff(request):
-    context = {}
-    template = 'staff.html'
-    return render(request, template, context)
+    return render(request, 'staff.html', {})
 
 
 def required_forms(request):
-    context = {}
-    template = 'required_forms.html'
-    return render(request, template, context)
+    return render(request, 'required_forms.html', {})
 
 
 def add_user_address(request):
-    print request.GET
     try:
         next_page = request.GET.get("next")
     except:
@@ -121,19 +104,13 @@ def add_user_address(request):
         'submit_btn': submit_btn,
         'form_title': form_title
     }
-    template = 'form.html'
-    return render(request, template, context)
+    return render(request, 'form.html', context)
 
 
 @login_required
 def user_profile(request):
-    user = None
     lessoncount = LessonCount.objects.get(user=request.user)
-    context = {
-        'user': user,
-        'lessoncount': lessoncount
-    }
-    return render(request, 'navbar.html', context)
+    return render(request, 'navbar.html', {'lessoncount': lessoncount})
 
 
 @login_required
@@ -155,5 +132,4 @@ def settings(request):
         'title': title,
         'form': form
     }
-    template = 'settings.html'
-    return render(request, template, context)
+    return render(request, 'settings.html', context)
